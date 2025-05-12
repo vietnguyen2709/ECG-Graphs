@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECG Visualization</title>
+    <!-- These scripts are Highcharts library -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/boost.js"></script>
+    <!-- This script is plotly
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>
+            <a href="/" style="color: white; text-decoration: none; display: flex; align-items: center;"><img src="{{ url_for('static', filename='images/topBarLogo.png') }}" style="height: 30px; width: auto; margin-right: 10px; position: relative; top: 2px;"/> Cardio Vision</a>
+        </h1>
+        <a href="/allPatients" style="color: white; text-decoration: none; margin-left: 85vw;">View All Patients</a>
+    </header>    
+    <div id="screen1">
+        <div class="ecg-layout">
+            <div class="upper-section">
+                <div id="instructionContainer">
+                    <h1>Step one</h1>
+                    <p>Choose a flat region on the ECG chart</p>
+                    <h1>Step two</h1>
+                    <p>Choose a single cardiac beat on the ECG chart</p>
+                    <h1>Step three</h1>
+                    <p>A chart will then show up on the right</p>
+                    <p>Select the QRS complex and press proceed</p>
+                    <p>The analysis data will be displayed on the next screen</p>
+                </div>
+                <div id="ecgContainer"></div>
+                <div id="singleBeatContainer">
+                    <h1>Select a cardiac beat on the ECG chart</h1>
+                    <div id="singleBeatChart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="screen2" style="display: flex; flex-direction: row;">
+        <div id="singleBeatContainer2">
+            <div id="singleBeatChart2"></div>
+        </div>
+        <div id="qrsContainer">
+            <div id="qrsChart"></div>
+        </div>
+        <div class="info-container">
+            <div class="upper-div">
+                <div class="patient-record">
+                    <div id="patientInfo"></div>
+                </div>  
+                <div id="vector-graph" class="tab-content">
+                    <h1 style="margin-bottom: 3px;">The Electrical Triaxial Axis</h1>
+                    <div style="display: none;"> <!--Keep it hidden. DO NOT SHOW IT-->
+                        <p>Magnitude: <span id="magnitude">-</span></p>
+                        <p>Angle: <span id="angle">-</span>°</p>
+                    </div>
+                    <div class="vector-graph-container">
+                        <img id="vector-image" style="display: none;">
+                    </div>
+                </div>
+            </div>
+            <div class="lower-div">
+                <div id="table-container" style="display: none;">
+                    <table id="leads-table" border="1">
+                        <thead>
+                            <tr>
+                                <th>Lead</th>
+                                <th>Start Time (s)</th>
+                                <th>End Time (s)</th>
+                                <th>Avg Baseline</th>
+                                <th>Max Value (mV)</th>
+                                <th>Min Value (mV)</th>
+                                <th>Corrected Max Peak</th>
+                                <th>Corrected Min Peak</th>
+                                <th>Resultant Vector</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div id="buttons-group" style="display: flex; gap: 15px; justify-content: center; margin-top: 2px;">
+                    <button 
+                        onclick="runFinalAnalysis(patientInfo, vectorData)" 
+                        style="background-color: #2a2; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold;">
+                        <i class="fas fa-robot" style="margin-right: 8px;"></i>AI Interpretation</button>
+                    <button id="selectAgain" style="padding: 10px 20px; border-radius: 5px;">
+                        <i class="fas fa-sync-alt" style="margin-right: 8px;"></i>Select Another Beat</button>
+                    <button id="chooseAnother" style="padding: 10px 20px; border-radius: 5px;">
+                        <i class="fas fa-list" style="margin-right: 8px;"></i>Choose Another Patient</button>
+                    <button id="exitToUpload" style="background-color: rgb(211, 30, 17); color: white; padding: 10px 20px; border-radius: 5px;">
+                        <i class="fas fa-times" style="margin-right: 8px;"></i>Exit</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <script>
+        const patientId = {{ patient_id | default('null') | tojson }};
+        localStorage.setItem("selectedPatientId", patientId);
+        function openTab(evt, tabName) {
+            let tabContents = document.querySelectorAll(".tab-content");
+            tabContents.forEach(tab => tab.style.display = "none");
+
+            let tabButtons = document.querySelectorAll(".tab-button");
+            tabButtons.forEach(btn => btn.classList.remove("active"));
+
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.classList.add("active");
+        }
+
+        document.getElementById("uploadForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let fileInput = document.getElementById("fileInput");
+
+            if (fileInput.files.length > 0) {
+                // Set containers to block or flex to show
+                document.getElementById("screen1").style.display = "block";  // Show Graph
+                document.getElementById("screen2").style.display = "block";
+                document.getElementById("qrsContainer").style.display = "block";  // Show QRS
+                document.getElementById("singleBeatContainer").style.display = "block";
+                document.getElementById("singleBeatContainer2").style.display = "block";
+                document.getElementById("patientInfo").style.display = "block";  // Show Patient Info
+                document.getElementById("vectorGraph").style.display = "block";  // Show Patient Info
+                document.getElementById("table-container").style.display = "block";  // Show Patient Info
+            } else {
+                alert("Please select a file to upload.");
+            }
+        });
+
+
+    </script>
+    <!-- AI pop-up window -->
+    <div id="ai-interpretation" style="
+        display: none;
+        position: fixed;
+        top: 5%;
+        left: 10%;
+        width: 80%;
+        height: 80%;
+        background: #1e1e1e;
+        color: white;
+        padding: 30px;
+        border-radius: 12px;
+        z-index: 1000;
+        overflow-y: auto;
+        box-shadow: 0 0 20px rgba(0, 255, 100, 0.3);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    ">
+        <span class="close-btn" style="
+            position: fixed;
+            right: 10%;
+            float: right;
+            cursor: pointer;
+            font-size: 56px;
+            color: white;
+            font-weight: bold;
+        ">&times;</span>
+
+        <h2 style="margin-top: 0; border-bottom: 1px solid #444; padding-bottom: 10px;">🤖🧠 AI Interpretation</h2>
+
+        <div id="ai-text" style="
+            white-space: pre-wrap;
+            font-size: 16px;
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            color: #e0e0e0;
+        ">Loading...</div>
+
+        <h3 style="color: #90ee90; margin-top: 20px;">✅ Recommended Next Steps</h3>
+        <ul style="margin-left: 20px; line-height: 1.6;">
+            <li>Follow up with a licensed cardiologist for a full evaluation.</li>
+            <li>Consider an echocardiogram or stress test if symptoms persist.</li>
+            <li>Monitor blood pressure and cholesterol regularly.</li>
+            <li>Maintain a heart-healthy lifestyle: exercise, diet, and stress reduction.</li>
+        </ul>
+
+        <div style="
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #333;
+            border-left: 5px solid #ffcc00;
+            font-size: 14px;
+            color: #f0e68c;
+            border-radius: 5px;
+        ">
+            ⚠️ <strong>Disclaimer:</strong> This analysis is generated by an AI model and is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider with any questions regarding a medical condition.
+        </div>
+    </div>
+
+
+    
+  
+
+    <footer>
+        <p>&copy; 2025 Cardio Vision. All Rights Reserved.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='scripts/app.js') }}"></script>
+</body>
+</html>

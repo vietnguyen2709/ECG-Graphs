@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>ECG Upload</title>
+    <style>
+        #response {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="home-btn">
+            <h1>
+                <a href="/">Cardio Vision <img src="https://cdn-icons-png.flaticon.com/512/1142/1142131.png"/></a>
+            </h1>
+        </div>
+        <div class="viewall-btn">
+            <a href="/allPatients">View All Patients</a>
+        </div>
+        
+    </header>
+    <div id="homepage">
+        <h1>Upload a ZIP File for a dataset</h1>
+        <p>The zip file must contain .hea and .dat files in a dataset</p>
+    </div>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <label for="file">Select a ZIP file:</label>
+        <input type="file" id="file" name="file" accept=".zip">
+        <button type="button" id="uploadButton" onclick="uploadFile()">Upload</button>
+    </form>
+    <div id="response">
+        <!-- Response from the server will be displayed here -->
+    </div>
+    <footer>
+        <p>&copy; 2025 Cardio Vision. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Ensure script is loaded properly with the correct type -->
+    <script src="{{ url_for('static', filename='scripts/uploadMultiplePatients.js') }}" type="module"></script>
+</body>
+</html>

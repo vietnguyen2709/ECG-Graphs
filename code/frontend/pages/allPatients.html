@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/allPatients.css') }}"> <!-- Link to the CSS file -->
+</head>
+<body>
+    <header>
+        <div class="home-btn">
+            <h1>
+                <a href="/" style="display: flex; align-items: center;"><img src="{{ url_for('static', filename='images/topBarLogo.png') }}" style="height: 30px; width: auto; margin-right: 10px; position: relative; top: 2px;"/> Cardio Vision</a>
+            </h1>
+        </div>
+        <div class="viewall-btn">
+            <a href="/allPatients">View All Patients</a>
+        </div>
+        
+    </header>
+    <h1>Patient History</h1>
+    <table class="patients-table">
+        <thead>
+            <tr>
+                <th class="patient-id-header">Patient ID</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Heart Rhythm</th>
+                <th>Cardiac Pacing</th>
+                <th>Conduction System Disease</th>
+                <th>Hypertrophies</th>
+                <th>Ischemia</th>
+                <th>Repolarization Abnormalities</th>
+                <th class="actions">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="patients-table-body">
+            <!-- Patient rows will be dynamically inserted here -->
+        </tbody>
+    </table>
+
+    <footer>
+        <p>&copy; 2025 Cardio Vision. All Rights Reserved.</p>
+    </footer>
+    <script src="{{ url_for('static', filename='scripts/allPatients.js') }}"></script> <!-- Link to the JavaScript file -->
+</body>
+</html>
