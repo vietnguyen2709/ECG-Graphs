@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Unna:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(41, 41, 41);
+    color: white; /* Ensure text is readable on black background */
+    margin: 0;
+    padding: 0;
+    overflow-x:hidden;
+}
+
+header {
+    background-color: #000000;
+    color: white;
+    width: 100vw;
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 10px;
+    font-family: 'overcame', sans-serif;
+    font-size: 10px;
+    box-sizing: border-box;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    padding: 6px 20px;
+    .home-btn{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        text-align: center;
+        margin-left: 180px;
+        h1 {
+            
+            a {
+                color: white;
+                text-decoration: none; /* Remove underline from links */
+                display:flex;
+                justify-content: center;
+                flex-direction: row;
+                img {
+                    width: 2.6rem;
+                    height: 2.6rem;
+                    justify-items: center;
+                    align-items: center;
+                   
+                }
+            }
+        }
+
+    }
+    .viewall-btn{
+        display:flex;
+        align-items: center;
+        justify-content: flex-end;
+        text-align: end;
+        margin-right: 50px;
+        a {
+            font-size: 1rem;
+            color: white;
+            text-decoration: none; /* Remove underline from links */
+        }
+    }
+    
+}
+
+header h1 {
+    margin-top: 12px;
+    margin-bottom: 0;
+}
+header h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+footer {
+    background-color: #000000;
+    position: fixed;
+    width: 100vw;
+    bottom: 0;
+    text-align: center;
+    font-size: 8px;
+    box-sizing: border-box;
+    padding: 0px; /* Add padding to the footer */
+    z-index: 1000; /* Ensure footer is above other content */
+}
+
+footer p {
+    color: rgb(148, 148, 148);
+}
+
+@font-face {
+    font-family: 'overcame';
+    src: url('../fonts/overcame-demo.bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.patients-table {
+    width: 95%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    .patient-id-header{
+        margin: auto;
+        text-align: center;
+    }
+    .patient-id{
+        font-weight: bolder;
+    }
+}
+
+.patients-table th, .patients-table td {
+    border: 1px solid #ddd;
+    padding: 16px;
+    text-align: center;
+}
+.patients-table th {
+    background-color: #000000;
+    color: white;
+    font-family:'Ubuntu', sans-serif;
+    text-align:center;
+}
+.patients-table tr{
+    font-family:'Roboto', sans-serif;   
+}
+.patients-table tr:nth-child(odd) {
+    background-color: rgb(70, 70, 70);
+    transition: 0.25s all ease;
+    color:white;
+}
+.patients-table tr:nth-child(even) {
+    background-color: #2c2c2c;
+    transition: 0.25s all ease;
+    color:white;
+}
+
+.patients-table tr:hover {
+    background-color: #01bdd6;
+    color:black;
+}
+
+.actions {
+    text-align: center;
+    width:20%;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    .button{
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.25s all ease;
+    font-size:16px;
+    font-weight: bold;
+    font-family:'Roboto', sans-serif;
+    }
+
+
+    .view-button{
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+    }
+    .view-button:hover{
+        background-color: #555555;
+        color:rgb(255, 255, 255);
+    }
+    .delete-button{
+        background-color: #a50000;
+        color: white;
+    }
+    .delete-button:hover{
+        background-color: #ff0000;
+        color:black;
+    }
+}
+
