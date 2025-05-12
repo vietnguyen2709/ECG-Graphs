@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>Cardio Vision</title>
+</head>
+<header>
+    <div class="home-btn">
+        <h1>
+            <a href="/" style="display: flex; align-items: center;"><img src="{{ url_for('static', filename='images/topBarLogo.png') }}" style="height: 30px; width: auto; margin-right: 10px; position: relative; top: 2px;"/> Cardio Vision</a>
+        </h1>
+    </div>
+    <div class="viewall-btn">
+        <a href="/allPatients">View All Patients</a>
+    </div>
+    
+</header>
+
+<body>
+    <div id="upload-section">
+        <div id="homepage" style="margin-top: -30px;">
+            <img src="{{ url_for('static', filename='images/homePageLogo.png') }}" alt="Welcome to Cardio Vision" style="max-width: 950px; width: 97%; height: auto; margin: 0 auto 40px; display: block;">
+        </div>
+        <div style="display: flex; gap: 40px;">
+            <a href="/uploadPatientsOneZip" style="
+                background-color: #28a745;
+                color: white;
+                padding: 20px 40px;
+                text-decoration: none;
+                font-family: 'overcame', sans-serif;
+                font-size: 24px;
+                font-weight: bold;
+                border-radius: 10px;
+                transition: background 0.3s ease;
+            " onmouseover="this.style.backgroundColor='#218838'" onmouseout="this.style.backgroundColor='#28a745'">
+                ➕📁 Add a new dataset
+            </a>
+
+            <a href="/uploadPatients" style="
+                background-color: #28a745;
+                color: white;
+                padding: 20px 40px;
+                text-decoration: none;
+                font-family: 'overcame', sans-serif;
+                font-size: 24px;
+                font-weight: bold;
+                border-radius: 10px;
+                transition: background 0.3s ease;
+            " onmouseover="this.style.backgroundColor='#218838'" onmouseout="this.style.backgroundColor='#28a745'">
+                ➕👨‍👨‍👦 Add One or Multiple Patients
+            </a>
+
+            <a href="/allPatients" style="
+                background-color: #007bff;
+                color: white;
+                padding: 20px 40px;
+                text-decoration: none;
+                font-family: 'overcame', sans-serif;
+                font-size: 24px;
+                font-weight: bold;
+                border-radius: 10px;
+                transition: background 0.3s ease;
+            " onmouseover="this.style.backgroundColor='#0069d9'" onmouseout="this.style.backgroundColor='#007bff'">
+                📋 View All Patients
+            </a>
+        </div>
+    </div>   
+</body>
+<footer>
+    <p>&copy; 2025 Cardio Vision. All Rights Reserved.</p>
+</footer>
+
+</html>

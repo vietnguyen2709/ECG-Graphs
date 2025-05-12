@@ -1,0 +1,460 @@
+/* Change background to black */
+body {
+    background-color: rgb(41, 41, 41);
+    color: white; /* Ensure text is readable on black background */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Update other elements to match dark mode */
+h1, h2, h3, p, label {
+    color: white; /* Make sure headings and text are visible */
+}
+
+
+#screen1 button {
+    background-color: #333;
+    color: white;
+    border: 1px solid white;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;  /* Rounded corners */
+    font-size: 16px;
+    display: flex;
+    align-items: center; /* Centers icon with text */
+    gap: 8px; /* Adds space between icon and text */
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#upload-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20vh;
+}
+/* Center the entire form in the middle of the screen */
+#uploadForm {
+    display: flex;
+    justify-content: center;  /* Centers horizontally */
+    align-items: center;  /* Centers vertically */
+    height: 30vh;  /* Makes the form take full viewport height */
+    gap: 50px;
+}
+
+/* Save Button - Green */
+#save {
+    background-color: #28a745 !important;
+    border: 1px solid #218838 !important;
+}
+
+#save:hover {
+    background-color: #218838 !important;
+}
+
+
+/* Update form inputs */
+input[type="file"] {
+    color: white;
+}
+
+.buttons {
+    display: none;
+    align-items: flex-start; /* Align content at the top */
+    justify-content: center;  /* Centers horizontally */
+    width: 100vw;
+}
+
+.ecg-layout {
+    display: flex;
+    flex-direction: column;  /* Stack items vertically */
+    height: 70vw;
+    width: 100vw;  /* Full width */
+    box-sizing: border-box;
+}
+
+/* Upper Section: ECG, QRS, and Patient Info */
+.upper-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 47%;
+}
+
+#ecgContainer {
+    display: block !important;
+    width: 65vw;
+    height: 89vh;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+#ecgContainer {
+    left: 0;
+}
+
+#ecgContainer.hidden {
+    transform: translateX(-100vw);
+    opacity: 0;
+}
+
+.mode-btn {
+    background-color: #4CAF50;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: #fff;
+    opacity: 0.5;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.mode-btn.active-mode {
+    opacity: 1 !important;
+}
+
+#instructionContainer {
+    display:flex;
+    width: 15vw;
+    height: 89vh;
+    margin-left: 1%;
+    background-color: rgba(255, 255, 255, 0.1); /* Light transparent background */
+    flex-direction: column;
+}
+
+#instructionContainer h1 {
+    font-family: 'overcame', sans-serif;
+    line-height: 1.5;
+    text-align: center;
+    margin: 10px 0;
+}
+
+#instructionContainer p {
+    line-height: 1.5;
+    text-align: center;
+    margin: 10px 0;
+}
+
+#singleBeatContainer {
+    display:flex;
+    width: 15vw;
+    height: 89vh;
+    margin-right: 1%;
+    background-color: rgba(255, 255, 255, 0.1); /* Light transparent background */
+    flex-direction: column;
+}
+
+#singleBeatContainer h1 {
+    font-family: 'overcame', sans-serif;
+    line-height: 1.5;
+    text-align: center;
+    margin: 10px 0;
+}
+
+#singleBeatContainer p {
+    line-height: 1.5;
+    text-align: center;
+    margin: 10px 0;
+}
+
+#singleBeatContainer2 {
+    display:flex;
+    width: 20vw;
+    height: 89vh;
+    margin-left: 2%;
+    background-color: rgba(255, 255, 255, 0.1); /* Light transparent background */
+}
+
+#qrsContainer {
+    display:flex;
+    width: 20vw;
+    height: 89vh;
+    margin-left: 2%;
+    margin-right: 1%;
+}
+
+#qrsChart, #singleBeatChart {
+    width: 105%;
+    height: 100%;
+}
+
+/* Container for Patient Info + Vector Graph */
+.info-container {
+    width: 60vw;
+    height: 89vh;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.upper-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.patient-record {
+    /* display: flex;
+    width: 40%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between; */
+    
+    gap: 20px;
+    padding-left: 2%;
+}
+
+#patientInfo {
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 90%;
+    max-width: 90%;
+    height: 100%;
+    padding-left: 20px;
+    border-radius: 8px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+#patientInfo p {
+    line-height: 1.5;
+    text-align: left;
+    margin: 10px 0;
+}
+
+#vector-graph {
+    width: 90%;
+    max-width: 90%;
+    border-radius: 8px;
+    flex-grow: 1; /* Takes up the other half */
+}
+
+#vector-graph h1 {
+    margin-top:2px;
+}
+
+#vector-image {
+    justify-self: center;
+    align-self: center;
+    width: auto;
+    height: auto;
+    max-width: 35vw;
+}
+
+/* Lower Section: Table */
+#table-container {
+    justify-content: center;
+    /* width: 100%;
+    height: auto; */
+    padding-top: 10px;
+    padding-bottom: 5px;
+    background-color: rgb(41, 41, 41);
+    box-sizing: border-box;
+}
+
+#buttons-group {
+    justify-content: center;
+    width: 100%;
+}
+
+/* Leads Table */
+#leads-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: black;
+    color: white;
+}
+
+/* Table headers and cells */
+#leads-table th, #leads-table td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid white;
+    font-size: 14px;
+}
+
+/* Ensure Table Stays Visible and Readable */
+#leads-table th {
+    background-color: #333;
+    font-weight: bold;
+}
+
+/* ECG Graph container */
+#ecg-plot {
+    background-color: black !important; /* Ensure Plotly graph area is also black */
+}
+
+/* Adjust graph text color */
+#ecg-plot .plotly .main-svg {
+    color: white;
+}
+
+/* Make selection areas visible */
+.selected {
+    background-color: rgba(255, 255, 0, 0.3); /* Keep selection boxes visible */
+}
+
+header {
+    background-color: #000000;
+    color: white;
+    width: 100vw;
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 10px;
+    font-family: 'overcame', sans-serif;
+    font-size: 10px;
+    box-sizing: border-box;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    padding: 6px 20px;
+    .home-btn{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        text-align: center;
+        margin-left: 180px;
+        h1 {
+            
+            a {
+                color: white;
+                text-decoration: none; /* Remove underline from links */
+                display:flex;
+                justify-content: center;
+                flex-direction: row;
+                img {
+                    width: 2.6rem;
+                    height: 2.6rem;
+                    justify-items: center;
+                    align-items: center;
+                   
+                }
+            }
+        }
+
+    }
+    .viewall-btn{
+        display:flex;
+        align-items: center;
+        justify-content: flex-end;
+        text-align: end;
+        margin-right: 50px;
+        a {
+            font-size: 1rem;
+            color: white;
+            text-decoration: none; /* Remove underline from links */
+        }
+    }
+    
+}
+
+header h1 {
+    margin-bottom: 0;
+}
+header h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+footer {
+    background-color: #000000;
+    position: fixed;
+    width: 100vw;
+    bottom: 0;
+    text-align: center;
+    font-size: 8px;
+    box-sizing: border-box;
+    padding: 0px; /* Add padding to the footer */
+    z-index: 1000; /* Ensure footer is above other content */
+}
+
+footer p {
+    color: rgb(148, 148, 148);
+}
+
+@font-face {
+    font-family: 'overcame';
+    src: url('fonts/overcame-demo.bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#visualization {
+    text-align: center;
+}
+
+#homepage h1 {
+    color: white;
+    text-align: center;
+    font-family: 'overcame', sans-serif;
+    font-size: 60px;
+    box-sizing: border-box;
+}
+
+#homepage p {
+    color: white;
+    text-align: center;
+    font-size: 24px;
+    box-sizing: border-box;
+}
+
+
+/* Graph Section */
+#screen1 {
+    display: none;
+    padding: 5px; /* Reduced padding */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Reduced gap between graph and table */
+    height: auto; /* Allow the section to grow as needed */
+    margin-bottom: 60px; /* Add margin to prevent footer overlap */
+}
+
+#screen2 {
+    display: none;
+    padding: 5px; /* Reduced padding */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Reduced gap between graph and table */
+    height: auto; /* Allow the section to grow as needed */
+    margin-bottom: 60px; /* Add margin to prevent footer overlap */
+}
+
+/* Action Buttons Container */
+#action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+/* Ensure the body and HTML elements allow scrolling */
+html, body {
+    height: 100%; /* Ensure the body takes up the full height of the viewport */
+    overflow-y: hidden; /* Allow vertical scrolling */
+}
+
+/* Ensure Table Stays Visible and Readable */
+#leads-table th, #leads-table td {
+    white-space: nowrap; /* Prevents text wrapping */
+}
+
+#table-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+#table-container::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 5px;
+}
+
+#table-container::-webkit-scrollbar-track {
+    background: #222;
+}
