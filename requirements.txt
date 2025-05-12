@@ -1,0 +1,10 @@
+flask
+matplotlib
+numpy
+wfdb
+sqlalchemy
+python-dotenv
+pymysql
+pytest
+pytest-cov
+pytest-mock
